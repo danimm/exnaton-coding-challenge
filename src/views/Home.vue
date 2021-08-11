@@ -13,7 +13,7 @@
   </div>
   <div class="p-grid">
     <div class="p-col">
-      <Chart type="bar" :data="basicData" height="150" />
+      <Chart type="bar" :data="basicData" :height="150" />
     </div>
   </div>
 </template>
