@@ -7,7 +7,7 @@ body {
   margin: 0;
 }
 #app {
-  background-color: #17212f;
+  // background-color: #17212f;
   height: 100vh;
 }
 </style>

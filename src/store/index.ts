@@ -43,26 +43,39 @@ export default createStore({
       // commit("setResults", data);
       dispatch("formatResults");
     },
-    formatResults({ state }) {
-      const dataDay = {
-        consumption: 0,
-        produced: 0,
-        total: 0,
-        date: new Date(),
-      };
+    formatResults({ state, commit }) {
+      const results = [];
+      for (let index = 1; index < 32; index++) {
+        const day =
+          index.toString().length == 1 ? `0${index}` : index.toString();
 
-      const first = data.filter((record: any) =>
-        moment(record.timestamp, "YYYY-MM-DD HH:mm").isSame("2021-05-01", "day")
-      );
+        const dataDay = {
+          y: 0,
+          produced: 0,
+          total: 0,
+          x: moment(`2021-05-${day}`).format("DD-MM"),
+        };
 
-      console.log(first.length);
+        const dayRecords = data.filter((record: any) =>
+          moment(record.timestamp, "YYYY-MM-DD HH:mm").isSame(
+            `2021-05-${day}`,
+            "day"
+          )
+        );
 
-      const total = first.reduce(
-        (acc: any, curr: any) => acc + curr["0100010700FF"],
-        0
-      );
+        const total = dayRecords.reduce(
+          (acc: any, curr: any) => acc + curr["0100010700FF"],
+          0
+        );
 
-      console.log((Math.round(total) / 1000).toFixed(2));
+        dataDay.y = Math.round(total) / 1000;
+        // dataDay.date = moment(dataDay.date, "YYYY-MM-DD HH:mm")
+        results.push(dataDay);
+      }
+
+      commit("setResults", results);
+
+      // console.log((Math.round(total) / 1000).toFixed(2));
 
       // for (let index = 0; index < 24; index++) {
       //   const day =
