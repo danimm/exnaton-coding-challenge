@@ -52,6 +52,7 @@
     </Message>
     <Button
       label="Search"
+      class="p-mt-4"
       style="width: 100%"
       :disabled="!validDates && !validHours"
       @click="searchDates()"
@@ -60,7 +61,7 @@
 </template>
 
 <script>
-import { defineComponent, reactive, toRefs, computed } from "vue";
+import { defineComponent, reactive, toRefs, computed, watch } from "vue";
 import { useStore } from "vuex";
 import moment from "moment";
 export default defineComponent({
@@ -96,6 +97,19 @@ export default defineComponent({
         });
       }
     }
+
+    function clear() {
+      data.startDate = "";
+      data.endDate = "";
+      data.startHour = "";
+      data.endHour = "";
+      store.commit("measurements/clearResults");
+    }
+
+    watch(
+      () => data.filterBy,
+      () => clear()
+    );
 
     return { ...toRefs(data), validDates, validHours, searchDates };
   },

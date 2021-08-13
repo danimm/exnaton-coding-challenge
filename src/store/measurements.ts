@@ -18,6 +18,9 @@ export const measurementsModule: Module<MeasurementsModule, MainState> = {
     setResults(state: MeasurementsModule, payload: Record[]) {
       state.results = payload;
     },
+    clearResults(state: MeasurementsModule) {
+      state.results = [];
+    },
   },
   actions: {
     getData() {
