@@ -27,30 +27,45 @@ export default defineComponent({
   setup() {
     const store = useStore();
     store.dispatch("getData");
-    const data = computed(() => store.state.results);
+    const may = computed(() => store.state.may);
+    const june = computed(() => store.state.june);
+    const july = computed(() => store.state.july);
+    // const xAxis =
+    //   may.value.map((el: any) => el.x) +
+    //   june.value.map((el: any) => el.x) +
+    //   july.value.map((el: any) => el.x);
+
+    // console.log(xAxis);
 
     const basicData = ref({
-      labels: data.value.map((el: any) => el.x),
+      // labels: [xAxis],
       // labels: ["January", "February", "March", "April", "May", "June", "July"],
       datasets: [
         {
           label: "May",
-          data: data.value,
+          data: may.value,
           backgroundColor: "#9CCC65",
+          // parsing: {
+          //   xAxisKey: "x",
+          // },
+        },
+        {
+          label: "June",
+          data: june.value,
+          backgroundColor: "#42A5F5",
+          // parsing: {
+          //   xAxisKey: "x",
+          // },
+        },
+        {
+          label: "July",
+          data: july.value,
+          backgroundColor: "#FFD371",
+          // parsing: {
+          //   xAxisKey: "x",
+          // },
         },
       ],
-      // datasets: [
-      //   {
-      //     label: "My First dataset",
-      //     backgroundColor: "#42A5F5",
-      //     data: [65, 59, 80, 81, 56, 55, 40],
-      //   },
-      //   {
-      //     label: "My Second dataset",
-      //     backgroundColor: "#9CCC65",
-      //     data: [28, 48, 40, 19, 86, 27, 90],
-      //   },
-      // ],
     });
 
     const options = ref({
