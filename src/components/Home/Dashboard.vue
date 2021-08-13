@@ -52,48 +52,6 @@ export default {
     },
   },
 };
-// import { defineComponent, ref, computed, onMounted } from "vue";
-// import { useStore } from "vuex";
-// export default defineComponent({
-//   name: "Dashboard",
-//   setup() {
-//     const store = useStore();
-//     const results = computed(() => store.getters["measurements/getResults"]);
-//     const chart = ref(null);
-//     onMounted(() => {
-//       console.log(chart.value);
-//     });
-//     const formattedResults = ref({
-//       datasets: [
-//         {
-//           label: "Kw/h",
-//           data: results.value,
-//           backgroundColor: "#9CCC65",
-//           parsing: {
-//             xAxisKey: "date",
-//             yAxisKey: "total",
-//           },
-//         },
-//       ],
-//     });
-
-//     const options = ref({
-//       responsive: true,
-//       stacked: true,
-//       plugins: {
-//         legend: {
-//           position: "top",
-//         },
-//         title: {
-//           display: true,
-//           text: "Total of comsuption in Kw/h",
-//         },
-//       },
-//     });
-
-//     return { formattedResults, options };
-//   },
-// });
 </script>
 
 <style lang="scss" scoped>

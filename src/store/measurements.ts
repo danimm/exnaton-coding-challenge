@@ -34,6 +34,8 @@ export const measurementsModule: Module<MeasurementsModule, MainState> = {
       const endDate = new Date(payload.end);
       const docs: Record[] = [];
 
+      commit("loadingData", true, { root: true });
+
       try {
         const collection = await fb.firestore
           .collection("measurements")
@@ -56,6 +58,8 @@ export const measurementsModule: Module<MeasurementsModule, MainState> = {
         commit("setResults", docs);
       } catch (e) {
         console.error(e.message);
+      } finally {
+        commit("loadingData", false, { root: true });
       }
     },
     getRecordsByHours() {
