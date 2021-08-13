@@ -1,13 +1,31 @@
 <template>
   <div class="container">
-    <!-- <h1>Dashboard</h1> -->
+    <Chart type="bar" :data="results" :options="options" />
   </div>
 </template>
 
 <script>
-export default {
-  name: 'Dashboard',
-};
+import { defineComponent } from "vue";
+export default defineComponent({
+  name: "Dashboard",
+  props: {
+    results: {
+      required: true,
+      type: Array,
+    },
+  },
+  setup(props, ctx) {
+    const options = {
+      responsive: true,
+      backgroundColor: "#9CCC65",
+      parsing: {
+        xAxisKey: "timestamp",
+        yAxisKey: "consumption",
+      },
+    };
+    return { options };
+  },
+});
 </script>
 
 <style lang="scss" scoped>

@@ -2,7 +2,10 @@
   <div class="p-flex">
     <div class="p-grid p-nogutter">
       <div class="p-col-8">
-        <dashboard />
+        <div class="chart-container">
+          <dashboard v-if="results.length && !loading" :results="results" />
+          <progress-spinner v-if="loading" />
+        </div>
       </div>
       <div class="p-col-4">
         <panel />
@@ -22,7 +25,8 @@ export default defineComponent({
   name: "Home",
   setup() {
     const store = useStore();
-    const date = ref("");
+    const loading = computed(() => store.getters["loading"]);
+    const results = computed(() => store.getters["measurements/getResults"]);
 
     const basicData = ref({
       // labels: [xAxis],
@@ -58,9 +62,16 @@ export default defineComponent({
     const options = ref({
       responsive: true,
     });
-    return { basicData, options, date };
+    return { loading, results };
   },
 });
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.chart-container {
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+</style>

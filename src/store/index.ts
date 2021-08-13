@@ -6,6 +6,9 @@ export default createStore<MainState>({
   state: {
     loading: false,
   },
+  getters: {
+    loading: (state) => state.loading,
+  },
   mutations: {
     loadingData(state: MainState, payload: boolean) {
       state.loading = payload;

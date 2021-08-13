@@ -1,9 +1,9 @@
-import { MainState, MeasurementsModule, Record } from '@/typings';
-import { Module } from 'vuex';
+import { MainState, MeasurementsModule, Record } from "@/typings";
+import { Module } from "vuex";
 
-import data from '@/utils/response.json';
-import moment from 'moment';
-import fb from '@/plugins/firebase';
+import data from "@/utils/response.json";
+import moment from "moment";
+import fb from "@/plugins/firebase";
 
 const measurementsModule: Module<MeasurementsModule, MainState> = {
   namespaced: true,
