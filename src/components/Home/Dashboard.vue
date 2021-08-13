@@ -19,6 +19,8 @@ export default {
       options: {
         responsive: true,
         stacked: true,
+        normalized: true,
+        animation: false,
         plugins: {
           legend: {
             position: "top",
