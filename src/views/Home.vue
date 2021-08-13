@@ -3,7 +3,7 @@
     <div class="p-grid p-nogutter">
       <div class="p-col-8">
         <div class="chart-container">
-          <dashboard v-if="results.length && !loading" :results="results" />
+          <dashboard v-if="results.length && !loading" />
           <progress-spinner v-if="loading" />
         </div>
       </div>
@@ -69,6 +69,7 @@ export default defineComponent({
 
 <style lang="scss" scoped>
 .chart-container {
+  background-color: #eeeeee;
   height: 100%;
   display: flex;
   justify-content: center;

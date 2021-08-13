@@ -1,29 +1,53 @@
 <template>
   <div class="container">
-    <Chart type="bar" :data="results" :options="options" />
+    <chart
+      ref="chart"
+      type="bar"
+      :data="formattedResults"
+      :options="options"
+      :height="800"
+      :width="900"
+    />
   </div>
 </template>
 
 <script>
-import { defineComponent } from "vue";
+import { defineComponent, ref, computed } from "vue";
+import { useStore } from "vuex";
 export default defineComponent({
   name: "Dashboard",
-  props: {
-    results: {
-      required: true,
-      type: Array,
-    },
-  },
-  setup(props, ctx) {
-    const options = {
+  setup() {
+    const store = useStore();
+    const results = computed(() => store.getters["measurements/getResults"]);
+    const formattedResults = ref({
+      datasets: [
+        {
+          label: "Kw/h",
+          data: results.value,
+          backgroundColor: "#9CCC65",
+          parsing: {
+            xAxisKey: "date",
+            yAxisKey: "total",
+          },
+        },
+      ],
+    });
+
+    const options = ref({
       responsive: true,
-      backgroundColor: "#9CCC65",
-      parsing: {
-        xAxisKey: "timestamp",
-        yAxisKey: "consumption",
+      stacked: true,
+      plugins: {
+        legend: {
+          position: "top",
+        },
+        title: {
+          display: true,
+          text: "Total of comsuption in Kw/h",
+        },
       },
-    };
-    return { options };
+    });
+
+    return { formattedResults, options };
   },
 });
 </script>

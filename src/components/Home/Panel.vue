@@ -84,13 +84,13 @@ export default defineComponent({
     );
 
     function searchDates() {
-      if (data.filterBy) {
+      if (data.filterBy == "Hour") {
         store.dispatch("measurements/getRecordsByHours", {
           start: data.startHour,
           end: data.endHour,
         });
       } else {
-        store.dispatch("measurements/getRecordsByMonths", {
+        store.dispatch("measurements/GetRecordsByDays", {
           start: data.startDate,
           end: data.endDate,
         });
