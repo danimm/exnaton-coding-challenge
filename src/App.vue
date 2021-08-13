@@ -8,6 +8,6 @@ body {
 }
 #app {
   // background-color: #17212f;
-  height: 100vh;
+  // height: 100vh;
 }
 </style>

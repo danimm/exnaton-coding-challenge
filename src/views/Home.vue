@@ -1,6 +1,6 @@
 <template>
   <div class="p-flex">
-    <div class="p-grid">
+    <div class="p-grid p-nogutter">
       <div class="p-col-8">
         <dashboard />
       </div>

@@ -13,6 +13,8 @@ import "primeflex/primeflex.css"; // flex.spaces,grid
 import Button from "primevue/button";
 import Toolbar from "primevue/toolbar";
 import Calendar from "primevue/calendar";
+import SelectButton from "primevue/selectbutton";
+import Message from "primevue/message";
 import Chart from "primevue/chart";
 
 const app = createApp(App);
@@ -23,6 +25,8 @@ app.use(PrimeVue);
 app.component("Button", Button);
 app.component("Toolbar", Toolbar);
 app.component("Calendar", Calendar);
+app.component("SelectButton", SelectButton);
+app.component("Message", Message);
 app.component("Chart", Chart);
 
 app.mount("#app");
