@@ -28,40 +28,6 @@ export default defineComponent({
     const loading = computed(() => store.getters["loading"]);
     const results = computed(() => store.getters["measurements/getResults"]);
 
-    const basicData = ref({
-      // labels: [xAxis],
-      // labels: ["January", "February", "March", "April", "May", "June", "July"],
-      // datasets: [
-      //   {
-      //     label: "May",
-      //     data: may.value,
-      //     backgroundColor: "#9CCC65",
-      //     // parsing: {
-      //     //   xAxisKey: "x",
-      //     // },
-      //   },
-      //   {
-      //     label: "June",
-      //     data: june.value,
-      //     backgroundColor: "#42A5F5",
-      //     // parsing: {
-      //     //   xAxisKey: "x",
-      //     // },
-      //   },
-      //   {
-      //     label: "July",
-      //     data: july.value,
-      //     backgroundColor: "#FFD371",
-      //     // parsing: {
-      //     //   xAxisKey: "x",
-      //     // },
-      //   },
-      // ],
-    });
-
-    const options = ref({
-      responsive: true,
-    });
     return { loading, results };
   },
 });

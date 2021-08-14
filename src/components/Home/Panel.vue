@@ -147,6 +147,8 @@ export default defineComponent({
     function clear() {
       data.startDate = "";
       data.endDate = "";
+      data.selectedDay = "";
+      data.allHours = false;
       data.startHour = "";
       data.endHour = "";
       store.commit("measurements/clearResults");

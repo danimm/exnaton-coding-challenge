@@ -37,12 +37,15 @@ export default {
     getType() {
       return this.$store.getters["measurements/getTypeOfResults"];
     },
+    getResults() {
+      return this.$store.getters["measurements/getResults"];
+    },
     formattedResults() {
       return {
         datasets: [
           {
             label: this.getType == "hour" ? "watts" : "Kw/h",
-            data: this.$store.getters["measurements/getResults"],
+            data: this.getResults,
             backgroundColor: "#9CCC65",
             parsing: {
               xAxisKey: "date",
