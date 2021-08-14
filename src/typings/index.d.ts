@@ -13,5 +13,11 @@ export interface MainState {
 
 export interface MeasurementsModule {
   results: Record[];
+  type: string;
+  messages: {
+    hour: string;
+    day: string;
+    [key: string]: string;
+  };
   userId: string;
 }

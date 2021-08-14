@@ -27,22 +27,22 @@ export default {
           },
           title: {
             display: true,
-            text: "Total of comsuption in Kw/h",
+            text: this.$store.getters["measurements/getChartTitle"],
           },
         },
       },
     };
   },
   computed: {
-    results() {
-      return this.$store.getters["measurements/getResults"];
+    getType() {
+      return this.$store.getters["measurements/getTypeOfResults"];
     },
     formattedResults() {
       return {
         datasets: [
           {
-            label: "Kw/h",
-            data: this.results,
+            label: this.getType == "hour" ? "watts" : "Kw/h",
+            data: this.$store.getters["measurements/getResults"],
             backgroundColor: "#9CCC65",
             parsing: {
               xAxisKey: "date",

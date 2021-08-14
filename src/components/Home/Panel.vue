@@ -14,16 +14,37 @@
             :showWeek="true"
             v-model="startDate"
             dateFormat="yy-mm-dd"
+            :minDate="minDate"
+            :maxDate="maxDate"
           />
         </div>
         <div class="p-col date-container">
-          <Calendar :showWeek="true" v-model="endDate" dateFormat="yy-mm-dd" />
+          <Calendar
+            :showWeek="true"
+            v-model="endDate"
+            dateFormat="yy-mm-dd"
+            :minDate="minDate"
+            :maxDate="maxDate"
+          />
         </div>
       </div>
     </template>
     <!-- Filter by days -->
+    <!-- Filter by hours -->
     <template v-if="filterBy == 'Hour'">
-      <h5>2. Choose a range of hours (e.g. 14:00 - 15:00):</h5>
+      <div class="p-grid">
+        <h5>2. Choose a day:</h5>
+        <div class="p-col">
+          <Calendar
+            v-model="selectedDay"
+            dateFormat="yy-mm-dd"
+            :showWeek="true"
+            :minDate="minDate"
+            :maxDate="maxDate"
+          />
+        </div>
+      </div>
+      <h5>3. Choose a range of hours (e.g. 14:00 - 15:00):</h5>
       <div class="p-grid">
         <div class="p-col">
           <Calendar
@@ -31,6 +52,7 @@
             :timeOnly="true"
             hourFormat="24"
             :stepMinute="60"
+            :class="{ 'p-invalid': !validHours && startHour && endHour }"
           />
         </div>
         <div class="p-col hour-container">
@@ -39,11 +61,12 @@
             :timeOnly="true"
             hourFormat="24"
             :stepMinute="60"
-            class="p-invalid"
+            :class="{ 'p-invalid': !validHours && startHour && endHour }"
           />
         </div>
       </div>
     </template>
+    <!-- Filter by hours -->
     <Message severity="error" v-if="!validDates && startDate && endDate">
       the first date must be earlier
     </Message>
@@ -74,8 +97,12 @@ export default defineComponent({
       startDate: "",
       endDate: "",
       startHour: "",
+      selectedDay: "",
       endHour: "",
     });
+
+    const minDate = new Date("2021-05-01");
+    const maxDate = new Date("2021-07-01");
 
     const validDates = computed(() =>
       moment(data.startDate).isSameOrBefore(data.endDate)
@@ -87,6 +114,7 @@ export default defineComponent({
     function searchDates() {
       if (data.filterBy == "Hour") {
         store.dispatch("measurements/getRecordsByHours", {
+          day: data.selectedDay,
           start: data.startHour,
           end: data.endHour,
         });
@@ -111,7 +139,14 @@ export default defineComponent({
       () => clear()
     );
 
-    return { ...toRefs(data), validDates, validHours, searchDates };
+    return {
+      ...toRefs(data),
+      validDates,
+      validHours,
+      searchDates,
+      minDate,
+      maxDate,
+    };
   },
 });
 </script>

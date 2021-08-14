@@ -9,10 +9,19 @@ export const measurementsModule: Module<MeasurementsModule, MainState> = {
   namespaced: true,
   state: {
     results: [] as Record[],
+    type: "",
+    messages: {
+      hour: "Total in watts of the total hourly range: XX:00 - XX:59",
+      day: "Total of comsuption in Kw/h",
+    },
     userId: "7eb6cb7a-bd74-4fb3-9503-0867b737c2f6",
   },
   getters: {
     getResults: (state: MeasurementsModule) => state.results,
+    getTypeOfResults: (state: MeasurementsModule) => state.type,
+    getChartTitle: (state: MeasurementsModule) => {
+      return state.messages[state.type];
+    },
   },
   mutations: {
     setResults(state: MeasurementsModule, payload: Record[]) {
@@ -20,6 +29,9 @@ export const measurementsModule: Module<MeasurementsModule, MainState> = {
     },
     clearResults(state: MeasurementsModule) {
       state.results = [];
+    },
+    setResultsType(state: MeasurementsModule, payload: string) {
+      state.type = payload;
     },
   },
   actions: {
@@ -54,7 +66,7 @@ export const measurementsModule: Module<MeasurementsModule, MainState> = {
           });
         });
 
-        console.log(docs);
+        commit("setResultsType", "day");
         commit("setResults", docs);
       } catch (e) {
         console.error(e.message);
@@ -62,8 +74,48 @@ export const measurementsModule: Module<MeasurementsModule, MainState> = {
         commit("loadingData", false, { root: true });
       }
     },
-    getRecordsByHours() {
-      // todo
+    async getRecordsByHours(
+      { state, commit },
+      payload: { day: string; start: string; end: string }
+    ) {
+      const selectedDay = moment(payload.day).format("YYYY-MM-DD");
+
+      const formattedStart = new Date(
+        `${selectedDay}T${moment(payload.start).format("HH:00")}`
+      );
+
+      const formattedEnd = new Date(
+        `${selectedDay}T${moment(payload.end).format("HH:00")}`
+      );
+
+      const docs: Record[] = [];
+      commit("loadingData", true, { root: true });
+
+      try {
+        const collection = await fb.firestore
+          .collection("measurements")
+          .doc(state.userId)
+          .collection("hours")
+          .where("date", ">=", formattedStart)
+          .where("date", "<=", formattedEnd)
+          .orderBy("date")
+          .get();
+
+        collection.forEach((snapshot: any) => {
+          docs.push({
+            ...snapshot.data(),
+            total: snapshot.data().total.toFixed(2),
+            date: moment(snapshot.data().date.toDate()).format("HH:00"),
+          });
+        });
+
+        commit("setResultsType", "hour");
+        commit("setResults", docs);
+      } catch (e) {
+        console.error(e.message);
+      } finally {
+        commit("loadingData", false, { root: true });
+      }
     },
   },
 };
