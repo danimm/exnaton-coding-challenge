@@ -76,16 +76,20 @@ export const measurementsModule: Module<MeasurementsModule, MainState> = {
     },
     async getRecordsByHours(
       { state, commit },
-      payload: { day: string; start: string; end: string }
+      payload: { day: string; start: string; end: string; allHours: boolean }
     ) {
       const selectedDay = moment(payload.day).format("YYYY-MM-DD");
 
       const formattedStart = new Date(
-        `${selectedDay}T${moment(payload.start).format("HH:00")}`
+        `${selectedDay}T${
+          payload.allHours ? "00:00" : moment(payload.start).format("HH:00")
+        }`
       );
 
       const formattedEnd = new Date(
-        `${selectedDay}T${moment(payload.end).format("HH:00")}`
+        `${selectedDay}T${
+          payload.allHours ? "23:00" : moment(payload.end).format("HH:00")
+        }`
       );
 
       const docs: Record[] = [];

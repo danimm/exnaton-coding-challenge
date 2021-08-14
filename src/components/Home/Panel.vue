@@ -52,6 +52,7 @@
             :timeOnly="true"
             hourFormat="24"
             :stepMinute="60"
+            :disabled="allHours"
             :class="{ 'p-invalid': !validHours && startHour && endHour }"
           />
         </div>
@@ -61,8 +62,15 @@
             :timeOnly="true"
             hourFormat="24"
             :stepMinute="60"
+            :disabled="allHours"
             :class="{ 'p-invalid': !validHours && startHour && endHour }"
           />
+        </div>
+      </div>
+      <div class="p-grid">
+        <div class="p-col">
+          <h5>View all records of the day</h5>
+          <InputSwitch v-model="allHours" class="p-ml-4" />
         </div>
       </div>
     </template>
@@ -77,7 +85,7 @@
       label="Search"
       class="p-mt-4"
       style="width: 100%"
-      :disabled="!validDates && !validHours"
+      :disabled="!validSearch"
       @click="searchDates()"
     />
   </div>
@@ -99,6 +107,7 @@ export default defineComponent({
       startHour: "",
       selectedDay: "",
       endHour: "",
+      allHours: false,
     });
 
     const minDate = new Date("2021-05-01");
@@ -111,12 +120,21 @@ export default defineComponent({
       moment(data.startHour).isSameOrBefore(data.endHour)
     );
 
+    const validSearch = computed(() => {
+      return (
+        validDates.value ||
+        validHours.value ||
+        (data.allHours && data.selectedDay)
+      );
+    });
+
     function searchDates() {
       if (data.filterBy == "Hour") {
         store.dispatch("measurements/getRecordsByHours", {
           day: data.selectedDay,
           start: data.startHour,
           end: data.endHour,
+          allHours: data.allHours,
         });
       } else {
         store.dispatch("measurements/GetRecordsByDays", {
@@ -146,6 +164,7 @@ export default defineComponent({
       searchDates,
       minDate,
       maxDate,
+      validSearch,
     };
   },
 });

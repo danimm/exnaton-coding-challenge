@@ -16,6 +16,7 @@ import Calendar from "primevue/calendar";
 import SelectButton from "primevue/selectbutton";
 import Message from "primevue/message";
 import ProgressSpinner from "primevue/progressspinner";
+import InputSwitch from "primevue/inputswitch";
 import Chart from "primevue/chart";
 
 const app = createApp(App);
@@ -29,6 +30,7 @@ app.component("Calendar", Calendar);
 app.component("SelectButton", SelectButton);
 app.component("Message", Message);
 app.component("ProgressSpinner", ProgressSpinner);
+app.component("InputSwitch", InputSwitch);
 app.component("Chart", Chart);
 
 app.mount("#app");
