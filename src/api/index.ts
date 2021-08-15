@@ -23,7 +23,7 @@ export default {
             // formatting the response for understanding
             docs.push({
               ...doc.data(),
-              total: doc.data().total.toFixed(2),
+              total: parseInt(doc.data().total.toFixed(2)),
               date: moment(doc.data().date.toDate()).format("DD-MM"),
             });
           });
@@ -65,7 +65,7 @@ export default {
             // formatting the response for understanding
             docs.push({
               ...doc.data(),
-              total: doc.data().total.toFixed(2),
+              total: parseInt(doc.data().total.toFixed(2)),
               date: moment(doc.data().date.toDate()).format("HH:00"),
             });
           });

@@ -1,19 +1,22 @@
 <template>
   <div class="container">
+    <cards-info />
     <exnaton-chart
       ref="chart"
       type="bar"
       :data="formattedResults"
       :options="options"
-      :height="800"
+      :height="600"
       :width="900"
     />
   </div>
 </template>
 
 <script>
+import CardsInfo from "../CardsInfo.vue";
 export default {
   name: "Dashboard",
+  components: { CardsInfo },
   data() {
     return {
       options: {
@@ -36,6 +39,9 @@ export default {
   computed: {
     getType() {
       return this.$store.getters["measurements/getTypeOfResults"];
+    },
+    getAvg() {
+      return this.$store.getters["measurements/getAverage"];
     },
     getResults() {
       return this.$store.getters["measurements/getResults"];

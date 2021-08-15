@@ -16,10 +16,39 @@ export const measurementsModule: Module<MeasurementsModule, MainState> = {
     userId: "7eb6cb7a-bd74-4fb3-9503-0867b737c2f6",
   },
   getters: {
-    getResults: (state: MeasurementsModule) => state.results,
-    getTypeOfResults: (state: MeasurementsModule) => state.type,
-    getChartTitle: (state: MeasurementsModule) => {
+    getResults: (state: MeasurementsModule): Record[] => state.results,
+    getTypeOfResults: (state: MeasurementsModule): string => state.type,
+    getChartTitle: (state: MeasurementsModule): string => {
       return state.messages[state.type];
+    },
+    getAverage: (state: MeasurementsModule): number => {
+      if (state.results.length) {
+        const sum = state.results.reduce((acc, curr) => acc + curr.total, 0);
+        const avg = parseInt((sum / state.results.length).toFixed(2));
+        return avg;
+      } else {
+        return 0;
+      }
+    },
+    getMax(state: MeasurementsModule): Record {
+      if (state.results.length) {
+        const max = state.results.reduce((prev, curr) => {
+          return prev.total > curr.total ? prev : curr;
+        });
+        return max;
+      } else {
+        return {} as Record;
+      }
+    },
+    getMin(state: MeasurementsModule): Record {
+      if (state.results.length) {
+        const min = state.results.reduce((prev, curr) => {
+          return prev.total < curr.total ? prev : curr;
+        });
+        return min;
+      } else {
+        return {} as Record;
+      }
     },
   },
   mutations: {
