@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <chart
+    <exnaton-chart
       ref="chart"
       type="bar"
       :data="formattedResults"

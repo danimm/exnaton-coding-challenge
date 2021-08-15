@@ -27,16 +27,16 @@ app.use(store);
 app.use(router);
 
 app.use(PrimeVue);
-app.component("Button", Button);
-app.component("Toolbar", Toolbar);
-app.component("Calendar", Calendar);
-app.component("SelectButton", SelectButton);
-app.component("Message", Message);
-app.component("ProgressSpinner", ProgressSpinner);
-app.component("InputSwitch", InputSwitch);
-app.component("Card", Card);
-app.component("InputText", InputText);
-app.component("Avatar", Avatar);
-app.component("Chart", Chart);
+app.component("exnaton-button", Button);
+app.component("exnaton-toolbar", Toolbar);
+app.component("exnaton-calendar", Calendar);
+app.component("exnaton-select-button", SelectButton);
+app.component("exnaton-message", Message);
+app.component("exnaton-progress-spinner", ProgressSpinner);
+app.component("exnaton-input-switch", InputSwitch);
+app.component("exnaton-card", Card);
+app.component("exnaton-input-text", InputText);
+app.component("exnaton-avatar", Avatar);
+app.component("exnaton-chart", Chart);
 
 app.mount("#app");

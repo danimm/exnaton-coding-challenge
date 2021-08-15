@@ -4,7 +4,7 @@
       <div class="p-col-8">
         <div class="chart-container">
           <dashboard v-if="showChart" />
-          <progress-spinner v-if="loading" />
+          <exnaton-progress-spinner v-if="loading" />
         </div>
       </div>
       <div class="p-col-4">

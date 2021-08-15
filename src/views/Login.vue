@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <card class="hero">
+    <exnaton-card class="hero">
       <template #title>
         <h2 class="p-text-center">
           Wellcome to the <br />Exnaton Coding Challenge! ✌🏻
@@ -19,17 +19,17 @@
         <p>Enter your credentials to get started.</p>
         <div class="form-container">
           <span class="p-float-label p-inputtext-lg">
-            <input-text type="text" v-model="username" />
+            <exnaton-input-text type="text" v-model="username" />
             <label for="username">Username</label>
           </span>
           <span class="p-float-label p-inputtext-lg">
-            <input-text type="password" v-model="password" />
+            <exnaton-input-text type="password" v-model="password" />
             <label for="username">Password</label>
           </span>
-          <Message v-if="loginError" severity="error">
+          <exnaton-message v-if="loginError" severity="error">
             Wrong credentials
-          </Message>
-          <Button
+          </exnaton-message>
+          <exnaton-button
             label="Login"
             class="p-button-rounded"
             style="width: 230px"
@@ -40,7 +40,7 @@
           Made with ❤️ <br />by Daniel Muñoz Martín
         </p>
       </template>
-    </card>
+    </exnaton-card>
   </div>
 </template>
 

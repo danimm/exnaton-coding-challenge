@@ -4,19 +4,19 @@
       <h3>
         Welcome <span v-if="user">{{ user.email }}</span>
       </h3>
-      <Button label="Logout" @click="userLogout" />
+      <exnaton-button label="Logout" @click="userLogout" />
     </div>
     <h3>Options</h3>
     <h5>1. Select a filter type:</h5>
     <div class="select-container">
-      <SelectButton v-model="filterBy" :options="options" />
+      <exnaton-select-button v-model="filterBy" :options="options" />
     </div>
     <!-- Filter by days -->
     <template v-if="filterBy == 'Day'">
       <h5>2. Choose a range of dates:</h5>
       <div class="p-grid">
         <div class="p-col">
-          <Calendar
+          <exnaton-calendar
             :showWeek="true"
             v-model="startDate"
             dateFormat="yy-mm-dd"
@@ -25,7 +25,7 @@
           />
         </div>
         <div class="p-col date-container">
-          <Calendar
+          <exnaton-calendar
             :showWeek="true"
             v-model="endDate"
             dateFormat="yy-mm-dd"
@@ -41,7 +41,7 @@
       <div class="p-grid">
         <h5>2. Choose a day:</h5>
         <div class="p-col">
-          <Calendar
+          <exnaton-calendar
             v-model="selectedDay"
             dateFormat="yy-mm-dd"
             :showWeek="true"
@@ -53,7 +53,7 @@
       <h5>3. Choose a range of hours (e.g. 14:00 - 15:00):</h5>
       <div class="p-grid">
         <div class="p-col">
-          <Calendar
+          <exnaton-calendar
             v-model="startHour"
             :timeOnly="true"
             hourFormat="24"
@@ -63,7 +63,7 @@
           />
         </div>
         <div class="p-col hour-container">
-          <Calendar
+          <exnaton-calendar
             v-model="endHour"
             :timeOnly="true"
             hourFormat="24"
@@ -76,18 +76,24 @@
       <div class="p-grid">
         <div class="p-col">
           <h5>View all records of the day</h5>
-          <InputSwitch v-model="allHours" class="p-ml-4" />
+          <exnaton-input-switch v-model="allHours" class="p-ml-4" />
         </div>
       </div>
     </template>
     <!-- Filter by hours -->
-    <Message severity="error" v-if="!validDates && startDate && endDate">
+    <exnaton-message
+      severity="error"
+      v-if="!validDates && startDate && endDate"
+    >
       the first date must be earlier
-    </Message>
-    <Message severity="error" v-if="!validHours && startHour && endHour">
+    </exnaton-message>
+    <exnaton-message
+      severity="error"
+      v-if="!validHours && startHour && endHour"
+    >
       the first hour must be earlier
-    </Message>
-    <Button
+    </exnaton-message>
+    <exnaton-button
       label="Search"
       class="p-mt-4"
       style="width: 100%"
