@@ -1,4 +1,9 @@
-import { MainState, MeasurementsModule, Record } from "@/typings";
+import {
+  AverageRecord,
+  MainState,
+  MeasurementsModule,
+  Record,
+} from "@/typings";
 import { Module } from "vuex";
 
 // import data from "@/utils/response.json";
@@ -8,6 +13,7 @@ export const measurementsModule: Module<MeasurementsModule, MainState> = {
   namespaced: true,
   state: {
     results: [] as Record[],
+    averageResults: [] as AverageRecord[],
     type: "",
     messages: {
       hour: "Total in watts of the total hourly range: XX:00 - XX:59",
@@ -17,6 +23,7 @@ export const measurementsModule: Module<MeasurementsModule, MainState> = {
   },
   getters: {
     getResults: (state: MeasurementsModule): Record[] => state.results,
+    getAverageResults: (state: MeasurementsModule) => state.averageResults,
     getTypeOfResults: (state: MeasurementsModule): string => state.type,
     getChartTitle: (state: MeasurementsModule): string => {
       return state.messages[state.type];
@@ -55,6 +62,9 @@ export const measurementsModule: Module<MeasurementsModule, MainState> = {
     setResults(state: MeasurementsModule, payload: Record[]) {
       state.results = payload;
     },
+    setAverageResults(state: MeasurementsModule, payload: AverageRecord[]) {
+      state.averageResults = payload;
+    },
     clearResults(state: MeasurementsModule) {
       state.results = [];
     },
@@ -63,11 +73,8 @@ export const measurementsModule: Module<MeasurementsModule, MainState> = {
     },
   },
   actions: {
-    getData() {
-      // todo
-    },
     async GetRecordsByDays(
-      { state, commit },
+      { state, commit, dispatch },
       payload: { start: string; end: string }
     ) {
       commit("loadingData", true, { root: true });
@@ -84,8 +91,10 @@ export const measurementsModule: Module<MeasurementsModule, MainState> = {
           end: payload.end,
           userId: state.userId,
         });
-        commit("setResultsType", "day");
+
         commit("setResults", results);
+        dispatch("getAverageResults");
+        commit("setResultsType", "day");
       } catch (e) {
         console.log(e.message);
       } finally {
@@ -93,7 +102,7 @@ export const measurementsModule: Module<MeasurementsModule, MainState> = {
       }
     },
     async getRecordsByHours(
-      { state, commit },
+      { state, commit, dispatch },
       payload: { day: string; start: string; end: string; allHours?: boolean }
     ) {
       commit("loadingData", true, { root: true });
@@ -117,11 +126,23 @@ export const measurementsModule: Module<MeasurementsModule, MainState> = {
         });
         commit("setResultsType", "hour");
         commit("setResults", results);
+        dispatch("getAverageResults");
       } catch (e) {
         console.error(e.message);
       } finally {
         commit("loadingData", false, { root: true });
       }
+    },
+    getAverageResults({ state, commit, getters }) {
+      const averageResults = [
+        { date: state.results[0].date, total: getters["getAverage"] },
+        {
+          date: state.results[state.results.length - 1].date,
+          total: getters["getAverage"],
+        },
+      ];
+
+      commit("setAverageResults", averageResults);
     },
   },
 };

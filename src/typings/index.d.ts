@@ -1,5 +1,6 @@
 import firebase from "firebase/app";
 
+// measurements
 export interface Record {
   consumption: number;
   produced: number;
@@ -7,23 +8,12 @@ export interface Record {
   date: firebase.firestore.Timestamp;
 }
 
-export interface MainState {
-  user: null | firebase.auth.UserCredential;
-  loginError: boolean;
-  loading: boolean;
+export interface AverageRecord {
+  date: firebase.firestore.Timestamp;
+  total: number;
 }
 
-export interface MeasurementsModule {
-  results: Record[];
-  type: string;
-  messages: {
-    hour: string;
-    day: string;
-    [key: string]: string;
-  };
-  userId: string;
-}
-
+// api responses
 export interface RecordsByDaysPayload {
   userId: string;
   start: string;
@@ -34,5 +24,24 @@ export interface RecordsByHoursPayload {
   day: string;
   start: string;
   end: string;
-  allHours: boolean;
+  allHours?: boolean;
+}
+
+// state
+
+export interface MainState {
+  user: null | firebase.auth.UserCredential;
+  loginError: boolean;
+  loading: boolean;
+}
+export interface MeasurementsModule {
+  results: Record[];
+  averageResults: AverageRecord[];
+  type: string;
+  messages: {
+    hour: string;
+    day: string;
+    [key: string]: string;
+  };
+  userId: string;
 }

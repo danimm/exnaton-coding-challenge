@@ -46,13 +46,30 @@ export default {
     getResults() {
       return this.$store.getters["measurements/getResults"];
     },
+    getAverageResults() {
+      return this.$store.getters["measurements/getAverageResults"];
+    },
     formattedResults() {
       return {
         datasets: [
           {
             label: this.getType == "hour" ? "watts" : "Kw/h",
             data: this.getResults,
+            order: 1,
             backgroundColor: "#9CCC65",
+            parsing: {
+              xAxisKey: "date",
+              yAxisKey: "total",
+            },
+          },
+          // Eneable average line on chart
+          {
+            label: "Average",
+            type: "line",
+            order: 0,
+            data: this.getAverageResults,
+            borderColor: "#39A2DB",
+            backgroundColor: "#39A2DB",
             parsing: {
               xAxisKey: "date",
               yAxisKey: "total",
