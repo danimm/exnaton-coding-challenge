@@ -3,16 +3,18 @@ import firebase from "firebase/app";
 import "firebase/auth";
 import "firebase/firestore";
 
-const fb = firebase.initializeApp({
-  apiKey: "AIzaSyAmFRWnvY3RLdxBTf-LE66fSxl88p5Fm00",
-  authDomain: "exnaton-code-challenge.firebaseapp.com",
-  projectId: "exnaton-code-challenge",
-  storageBucket: "exnaton-code-challenge.appspot.com",
-  messagingSenderId: "826963065669",
-  appId: "1:826963065669:web:aaf80e02bd4f3ea985dc2c",
-});
-
-export default {
-  firestore: fb.firestore(),
-  auth: fb.auth(),
+const config = {
+  apiKey: process.env.VUE_APP_FB_API_KEY,
+  authDomain: process.env.VUE_APP_FB_AUTH_DOMAIN,
+  projectId: process.env.VUE_APP_FB_PROJECT_ID,
+  storageBucket: process.env.VUE_APP_FB_STORAGE_BUCKET,
+  messagingSenderId: process.env.VUE_APP_FB_MESSAGING_SENDER_ID,
+  appId: process.env.VUE_APP_FB_APP_ID,
 };
+
+firebase.initializeApp(config);
+
+const auth = firebase.auth();
+const db = firebase.firestore();
+
+export { auth, db, firebase };

@@ -8,6 +8,8 @@ export interface Record {
 }
 
 export interface MainState {
+  user: null | firebase.auth.UserCredential;
+  loginError: boolean;
   loading: boolean;
 }
 

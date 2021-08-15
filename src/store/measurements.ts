@@ -3,7 +3,7 @@ import { Module } from "vuex";
 
 import data from "@/utils/response.json";
 import moment from "moment";
-import fb from "@/plugins/firebase";
+import { db } from "@/plugins/firebase";
 
 export const measurementsModule: Module<MeasurementsModule, MainState> = {
   namespaced: true,
@@ -49,7 +49,7 @@ export const measurementsModule: Module<MeasurementsModule, MainState> = {
       commit("loadingData", true, { root: true });
 
       try {
-        const collection = await fb.firestore
+        const collection = await db
           .collection("measurements")
           .doc(state.userId)
           .collection("days")
@@ -96,7 +96,7 @@ export const measurementsModule: Module<MeasurementsModule, MainState> = {
       commit("loadingData", true, { root: true });
 
       try {
-        const collection = await fb.firestore
+        const collection = await db
           .collection("measurements")
           .doc(state.userId)
           .collection("hours")
