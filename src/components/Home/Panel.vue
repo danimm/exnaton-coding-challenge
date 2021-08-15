@@ -1,6 +1,9 @@
 <template>
   <div class="panel-container">
-    <div class="p-d-flex p-jc-end">
+    <div class="p-d-flex p-jc-between p-ai-center">
+      <h3>
+        Welcome <span v-if="user">{{ user.email }}</span>
+      </h3>
       <Button label="Logout" @click="userLogout" />
     </div>
     <h3>Options</h3>
@@ -125,6 +128,8 @@ export default defineComponent({
       moment(data.startHour).isSameOrBefore(data.endHour)
     );
 
+    const user = computed(() => store.getters["user"]);
+
     const validSearch = computed(() => {
       return (
         validDates.value ||
@@ -178,6 +183,7 @@ export default defineComponent({
       maxDate,
       validSearch,
       userLogout,
+      user,
     };
   },
 });

@@ -23,7 +23,7 @@
             <label for="username">Username</label>
           </span>
           <span class="p-float-label p-inputtext-lg">
-            <input-text type="text" v-model="password" />
+            <input-text type="password" v-model="password" />
             <label for="username">Password</label>
           </span>
           <Message v-if="loginError" severity="error">

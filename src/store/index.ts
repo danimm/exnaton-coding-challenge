@@ -11,6 +11,7 @@ export default createStore<MainState>({
   },
   getters: {
     loading: (state: MainState) => state.loading,
+    user: (state: MainState) => state.user,
     loginError: (state: MainState) => state.loginError,
   },
   mutations: {
