@@ -3,7 +3,7 @@
     <div class="p-grid p-nogutter">
       <div class="p-col-8">
         <div class="chart-container">
-          <dashboard v-if="results.length && !loading" />
+          <dashboard v-if="showChart" />
           <progress-spinner v-if="loading" />
         </div>
       </div>
@@ -28,17 +28,24 @@ export default defineComponent({
     const loading = computed(() => store.getters["loading"]);
     const results = computed(() => store.getters["measurements/getResults"]);
 
-    return { loading, results };
+    const showChart = computed(() => !loading.value && results.value.length);
+
+    return { loading, results, showChart };
   },
 });
 </script>
 
 <style lang="scss" scoped>
 .chart-container {
-  background-color: #eeeeee;
+  background-color: #e1e8eb;
   height: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
+}
+.hero {
+  width: 35rem;
+  margin-bottom: 2em;
+  padding: 2em;
 }
 </style>
