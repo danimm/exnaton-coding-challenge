@@ -7,6 +7,9 @@ const routes: Array<RouteRecordRaw> = [
     path: "/",
     name: "Home",
     component: Home,
+    meta: {
+      requiresAuth: true,
+    },
   },
   {
     path: "/login",
@@ -22,6 +25,14 @@ const routes: Array<RouteRecordRaw> = [
 const router = createRouter({
   history: createWebHashHistory(),
   routes,
+});
+
+router.beforeEach(async (to, from, next) => {
+  const requiresAuth = to.matched.some((record) => record.meta.requiresAuth);
+  const user = await store.dispatch("getUser");
+
+  if (requiresAuth && !user) next({ name: "Login" });
+  else next();
 });
 
 export default router;

@@ -5,9 +5,11 @@
 <script>
 export default {
   name: "App",
-  mounted() {
-    this.$store.dispatch("checkAuth");
-  },
+  // async mounted() {
+  //   try {
+  //     this.$store.dispatch("checkAuth");
+  //   }
+  // },
 };
 </script>
 

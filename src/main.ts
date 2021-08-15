@@ -19,6 +19,7 @@ import ProgressSpinner from "primevue/progressspinner";
 import InputSwitch from "primevue/inputswitch";
 import Card from "primevue/card";
 import InputText from "primevue/inputtext";
+import Avatar from "primevue/avatar";
 import Chart from "primevue/chart";
 
 const app = createApp(App);
@@ -35,6 +36,7 @@ app.component("ProgressSpinner", ProgressSpinner);
 app.component("InputSwitch", InputSwitch);
 app.component("Card", Card);
 app.component("InputText", InputText);
+app.component("Avatar", Avatar);
 app.component("Chart", Chart);
 
 app.mount("#app");

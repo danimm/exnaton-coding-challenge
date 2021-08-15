@@ -1,7 +1,7 @@
 import { createStore } from "vuex";
 import { MainState } from "@/typings";
 import { measurementsModule } from "./measurements";
-import { db, auth } from "@/plugins/firebase";
+import { auth } from "@/plugins/firebase";
 
 export default createStore<MainState>({
   state: {
@@ -10,7 +10,8 @@ export default createStore<MainState>({
     loading: false,
   },
   getters: {
-    loading: (state) => state.loading,
+    loading: (state: MainState) => state.loading,
+    loginError: (state: MainState) => state.loginError,
   },
   mutations: {
     loadingData(state: MainState, payload: boolean) {
@@ -25,6 +26,7 @@ export default createStore<MainState>({
   },
   actions: {
     async userLogin({ commit }, payload: { email: string; password: string }) {
+      commit("setLoginError", false);
       try {
         await auth.signInWithEmailAndPassword(payload.email, payload.password);
       } catch (e) {
@@ -33,6 +35,7 @@ export default createStore<MainState>({
       }
     },
     async userLogOut({ commit }) {
+      commit("setLoginError", false);
       try {
         await auth.signOut();
       } catch (e) {
@@ -40,8 +43,13 @@ export default createStore<MainState>({
         console.error(e.message);
       }
     },
-    checkAuth({ commit }) {
-      auth.onAuthStateChanged((user) => commit("setUser", user));
+    getUser({ commit }) {
+      return new Promise((resolve) => {
+        auth.onAuthStateChanged((user) => {
+          commit("setUser", user);
+          resolve(user);
+        });
+      });
     },
   },
   modules: {

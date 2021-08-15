@@ -1,5 +1,8 @@
 <template>
   <div class="panel-container">
+    <div class="p-d-flex p-jc-end">
+      <Button label="Logout" @click="userLogout" />
+    </div>
     <h3>Options</h3>
     <h5>1. Select a filter type:</h5>
     <div class="select-container">
@@ -95,10 +98,12 @@
 import { defineComponent, reactive, toRefs, computed, watch } from "vue";
 import { useStore } from "vuex";
 import moment from "moment";
+import { useRouter } from "vue-router";
 export default defineComponent({
   name: "PanelComponent",
   setup() {
     const store = useStore();
+    const router = useRouter();
     const data = reactive({
       filterBy: "",
       options: ["Day", "Hour"],
@@ -154,6 +159,11 @@ export default defineComponent({
       store.commit("measurements/clearResults");
     }
 
+    function userLogout() {
+      store.dispatch("userLogOut");
+      router.push({ name: "Login" });
+    }
+
     watch(
       () => data.filterBy,
       () => clear()
@@ -167,6 +177,7 @@ export default defineComponent({
       minDate,
       maxDate,
       validSearch,
+      userLogout,
     };
   },
 });

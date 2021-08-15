@@ -33,7 +33,7 @@
             label="Login"
             class="p-button-rounded"
             style="width: 230px"
-            @click="goToDashboard"
+            @click="userLogin"
           />
         </div>
         <p class="p-text-center p-mt-4">
@@ -45,25 +45,38 @@
 </template>
 
 <script>
-import { defineComponent, ref } from "vue";
+import { defineComponent, ref, computed } from "vue";
 import { useRouter } from "vue-router";
+import { useStore } from "vuex";
 export default defineComponent({
   name: "Login",
   setup() {
     const router = useRouter();
+    const store = useStore();
+
     const username = ref("");
     const password = ref("");
-    const loginError = ref(false);
+    const loginError = computed(() => store.getters["loginError"]);
 
-    function goToDashboard() {
-      router.push({ name: "Home" });
+    async function userLogin() {
+      try {
+        await store.dispatch("userLogin", {
+          email: username.value,
+          password: password.value,
+        });
+        if (!loginError.value) {
+          router.push({ name: "Home" });
+        }
+      } catch (e) {
+        console.error(e.message);
+      }
     }
 
     return {
       username,
       password,
       loginError,
-      goToDashboard,
+      userLogin,
     };
   },
 });
