@@ -23,3 +23,16 @@ export interface MeasurementsModule {
   };
   userId: string;
 }
+
+export interface RecordsByDaysPayload {
+  userId: string;
+  start: string;
+  end: string;
+}
+export interface RecordsByHoursPayload {
+  userId: string;
+  day: string;
+  start: string;
+  end: string;
+  allHours: boolean;
+}

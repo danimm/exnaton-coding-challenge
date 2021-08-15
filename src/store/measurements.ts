@@ -1,9 +1,8 @@
 import { MainState, MeasurementsModule, Record } from "@/typings";
 import { Module } from "vuex";
 
-import data from "@/utils/response.json";
-import moment from "moment";
-import { db } from "@/plugins/firebase";
+// import data from "@/utils/response.json";
+import api from "@/api/index";
 
 export const measurementsModule: Module<MeasurementsModule, MainState> = {
   namespaced: true,
@@ -42,79 +41,53 @@ export const measurementsModule: Module<MeasurementsModule, MainState> = {
       { state, commit },
       payload: { start: string; end: string }
     ) {
-      const startDate = new Date(payload.start);
-      const endDate = new Date(payload.end);
-      const docs: Record[] = [];
-
       commit("loadingData", true, { root: true });
-
       try {
-        const collection = await db
-          .collection("measurements")
-          .doc(state.userId)
-          .collection("days")
-          .where("date", ">=", startDate)
-          .where("date", "<=", endDate)
-          .orderBy("date")
-          .get();
-
-        collection.forEach((snapshot: any) => {
-          docs.push({
-            ...snapshot.data(),
-            total: snapshot.data().total.toFixed(2),
-            date: moment(snapshot.data().date.toDate()).format("DD-MM"),
-          });
+        // axios.get('https://exnaton.com/api/measurements', {
+        //   params: {
+        //     userId,
+        //     start
+        //     end,
+        //   }
+        // })
+        const results = await api.getRecordsByDays({
+          start: payload.start,
+          end: payload.end,
+          userId: state.userId,
         });
-
         commit("setResultsType", "day");
-        commit("setResults", docs);
+        commit("setResults", results);
       } catch (e) {
-        console.error(e.message);
+        console.log(e.message);
       } finally {
         commit("loadingData", false, { root: true });
       }
     },
     async getRecordsByHours(
       { state, commit },
-      payload: { day: string; start: string; end: string; allHours: boolean }
+      payload: { day: string; start: string; end: string; allHours?: boolean }
     ) {
-      const selectedDay = moment(payload.day).format("YYYY-MM-DD");
-
-      const formattedStart = new Date(
-        `${selectedDay}T${
-          payload.allHours ? "00:00" : moment(payload.start).format("HH:00")
-        }`
-      );
-
-      const formattedEnd = new Date(
-        `${selectedDay}T${
-          payload.allHours ? "23:00" : moment(payload.end).format("HH:00")
-        }`
-      );
-
-      const docs: Record[] = [];
       commit("loadingData", true, { root: true });
 
       try {
-        const collection = await db
-          .collection("measurements")
-          .doc(state.userId)
-          .collection("hours")
-          .where("date", ">=", formattedStart)
-          .where("date", "<=", formattedEnd)
-          .orderBy("date")
-          .get();
-
-        collection.forEach((snapshot: any) => {
-          docs.push({
-            ...snapshot.data(),
-            total: snapshot.data().total.toFixed(2),
-            date: moment(snapshot.data().date.toDate()).format("HH:00"),
-          });
+        // axios.get('https://exnaton.com/api/measurements', {
+        //   params: {
+        //     userId,
+        //     day,
+        //     start
+        //     end,
+        //     allHours?
+        //   }
+        // })
+        const results = await api.getRecordsByHours({
+          start: payload.start,
+          end: payload.end,
+          day: payload.day,
+          allHours: payload.allHours || false,
+          userId: state.userId,
         });
-
         commit("setResultsType", "hour");
-        commit("setResults", docs);
+        commit("setResults", results);
       } catch (e) {
         console.error(e.message);
       } finally {
