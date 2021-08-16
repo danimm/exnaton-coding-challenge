@@ -1,19 +1,17 @@
 <template>
-  <div class="container">
+  <div class="cards-info-conta">
     <cards-info />
-    <exnaton-chart
-      ref="chart"
-      type="bar"
-      :data="formattedResults"
-      :options="options"
-      :height="600"
-      :width="900"
-    />
   </div>
+  <exnaton-chart
+    ref="chart"
+    type="bar"
+    :data="formattedResults"
+    :options="options"
+  />
 </template>
 
 <script>
-import CardsInfo from "../CardsInfo.vue";
+import CardsInfo from "./CardsInfo.vue";
 export default {
   name: "Dashboard",
   components: { CardsInfo },
@@ -21,9 +19,10 @@ export default {
     return {
       options: {
         responsive: true,
-        stacked: true,
+        maintainAspectRatio: true,
         normalized: true,
         animation: false,
+        aspectRatio: 2,
         plugins: {
           legend: {
             position: "top",
@@ -83,8 +82,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.container {
-  background-color: #e1e8eb;
-  height: 100vh;
-}
+// .container {
+//   background-color: #e1e8eb;
+//   height: 100vh;
+// }
 </style>

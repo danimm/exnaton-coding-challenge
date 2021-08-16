@@ -15,6 +15,7 @@ export default {
 <style lang="scss">
 body {
   margin: 0;
+  background-color: #e1e8eb;
 }
 
 .fade-enter-active,

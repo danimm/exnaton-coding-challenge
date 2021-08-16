@@ -1,15 +1,11 @@
 <template>
-  <div class="p-flex">
-    <div class="p-grid p-nogutter">
-      <div class="p-col-8">
-        <div class="chart-container">
-          <dashboard v-if="showChart" />
-          <exnaton-progress-spinner v-if="loading" />
-        </div>
-      </div>
-      <div class="p-col-4">
-        <panel />
-      </div>
+  <div class="grid-container">
+    <div class="chart-container">
+      <dashboard v-if="showChart" />
+      <exnaton-progress-spinner v-if="loading" />
+    </div>
+    <div class="panel-container">
+      <panel />
     </div>
   </div>
 </template>
@@ -36,16 +32,32 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
+.grid-container {
+  display: grid;
+  grid-template-columns: 70% 30%;
+  grid-template-areas: "chart panel";
+}
 .chart-container {
-  background-color: #e1e8eb;
-  height: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  widows: 100%;
+  grid-area: chart;
+  padding: 20px 50px;
+}
+.panel-container {
+  grid-area: panel;
 }
 .hero {
   width: 35rem;
   margin-bottom: 2em;
   padding: 2em;
+}
+
+@media screen and (max-width: 1024px) {
+  .grid-container {
+    grid-template-rows: minmax(300px, 600px) 80%;
+    grid-template-columns: 100%;
+    grid-template-areas:
+      "panel"
+      "chart";
+  }
 }
 </style>

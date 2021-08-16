@@ -48,9 +48,8 @@ export default defineComponent({
 
 <style lang="scss" scoped>
 .cards-container {
-  height: 100px;
-  margin: 50px 0 30px 0;
-  padding: 20px;
+  // height: 100px;
+  margin: 20px 0 30px 0;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -58,7 +57,7 @@ export default defineComponent({
 
   .card {
     text-align: center;
-    height: 150px;
+    min-height: 100px;
     h3 {
       margin: 0;
     }
