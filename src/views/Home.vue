@@ -13,7 +13,7 @@
 <script lang="ts">
 import Dashboard from "@/components/Home/Dashboard.vue";
 import Panel from "@/components/Home/Panel.vue";
-import { defineComponent, ref, computed } from "vue";
+import { defineComponent, computed } from "vue";
 import { useStore } from "vuex";
 
 export default defineComponent({
