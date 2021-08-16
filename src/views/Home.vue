@@ -53,11 +53,16 @@ export default defineComponent({
 
 @media screen and (max-width: 1024px) {
   .grid-container {
-    grid-template-rows: minmax(300px, 600px) 80%;
-    grid-template-columns: 100%;
+    grid-template-rows: minmax(1fr, 300px) 1fr;
+    grid-template-columns: 1fr;
     grid-template-areas:
       "panel"
       "chart";
+  }
+}
+@media screen and (max-width: 660px) {
+  .chart-container {
+    padding: 20px 20px;
   }
 }
 </style>

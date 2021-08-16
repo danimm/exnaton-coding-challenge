@@ -67,4 +67,18 @@ export default defineComponent({
     }
   }
 }
+
+@media screen and (max-width: 660px) {
+  .cards-container {
+    margin: 20px 0;
+    .card {
+      h3 {
+        font-size: 18px;
+      }
+      p {
+        font-size: 20px;
+      }
+    }
+  }
+}
 </style>

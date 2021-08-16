@@ -62,7 +62,10 @@
               hourFormat="24"
               :stepMinute="60"
               :disabled="allHours"
-              :class="{ 'p-invalid': !validHours && startHour && endHour }"
+              :class="{
+                'p-invalid':
+                  !validHours && startHour && endHour && !validSearch,
+              }"
             />
           </div>
           <div class="p-col hour-container">
@@ -72,7 +75,10 @@
               hourFormat="24"
               :stepMinute="60"
               :disabled="allHours"
-              :class="{ 'p-invalid': !validHours && startHour && endHour }"
+              :class="{
+                'p-invalid':
+                  !validHours && startHour && endHour && !validSearch,
+              }"
             />
           </div>
         </div>
@@ -94,7 +100,7 @@
       </exnaton-message>
       <exnaton-message
         severity="error"
-        v-if="!validHours && startHour && endHour"
+        v-if="!validHours && startHour && endHour && !validSearch"
       >
         the first hour must be earlier
       </exnaton-message>
