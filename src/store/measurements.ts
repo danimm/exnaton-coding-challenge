@@ -79,6 +79,7 @@ export const measurementsModule: Module<MeasurementsModule, MainState> = {
     ) {
       commit("loadingData", true, { root: true });
       try {
+        // If we had an API it would look like this
         // axios.get('https://exnaton.com/api/measurements', {
         //   params: {
         //     userId,
@@ -108,6 +109,7 @@ export const measurementsModule: Module<MeasurementsModule, MainState> = {
       commit("loadingData", true, { root: true });
 
       try {
+        // If we had an API it would look like this
         // axios.get('https://exnaton.com/api/measurements', {
         //   params: {
         //     userId,
@@ -133,6 +135,7 @@ export const measurementsModule: Module<MeasurementsModule, MainState> = {
         commit("loadingData", false, { root: true });
       }
     },
+    // This action creates the line for the second dataset showing the average of the records.
     getAverageResults({ state, commit, getters }) {
       const averageResults = [
         { date: state.results[0].date, total: getters["getAverage"] },

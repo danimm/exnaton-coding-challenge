@@ -61,7 +61,7 @@ export default {
               yAxisKey: "total",
             },
           },
-          // Eneable average line on chart
+          // Disable the second dataset to hide the line with the average of the values.
           {
             label: "Average",
             type: "line",
