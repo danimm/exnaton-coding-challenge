@@ -23,7 +23,11 @@
             <label for="username">Username</label>
           </span>
           <span class="p-float-label p-inputtext-lg">
-            <exnaton-input-text type="password" v-model="password" />
+            <exnaton-input-text
+              type="password"
+              v-model="password"
+              @keydown.enter="userLogin"
+            />
             <label for="username">Password</label>
           </span>
           <exnaton-message v-if="loginError" severity="error">
