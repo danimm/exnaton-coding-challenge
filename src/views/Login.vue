@@ -105,4 +105,19 @@ export default defineComponent({
     border-radius: 30px;
   }
 }
+@media screen and (max-width: 770px) {
+  .container {
+    padding: 0 40px;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  h2 {
+    font-size: 30px;
+  }
+  .container .hero {
+    width: 100%;
+    padding: 0 20px;
+  }
+}
 </style>
